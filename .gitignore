@@ -1,0 +1,6 @@
+# Local source archive retained for reference, not for publication
+.project-archive/
+
+# Local previews and system files
+*.log
+.DS_Store
