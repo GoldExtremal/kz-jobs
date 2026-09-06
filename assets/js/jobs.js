@@ -13,6 +13,48 @@ const aliases = {'EPAM Systems':'EPAM Kazakhstan','BI Development':'BI Group / B
 const domains = {'RemoFirst':'remofirst.com','Higgsfield AI':'higgsfield.ai','Т-Банк':'tbank.ru','Ruby Labs':'rubylabs.com','Intetics':'intetics.com','Frontline Data Solutions':'frontlinedatasolutions.com','Сентрас Капитал':'centras.kz','F1servicecentre':'f1servicecentre.co.uk','Supabase':'supabase.com','Tether':'tether.to','Hopsule':'hopsule.com','Corsearch':'corsearch.com','AbeloHost':'abelohost.com','Zencoder':'zencoder.ai','Canonical':'canonical.com','Andersen':'andersenlab.com','ReactBD':'reactbd.com','Freedom Satellite':'freedomsat.kz','INFUSE':'infuse.com','Spotter AI':'spotter.ai'};
 let companies = [];
 const activeFilters = new Set();
+const scrollStorageKey = 'react-jobs-scroll-y';
+const restoreScroll = !location.hash;
+let savedScrollY = 0;
+let scrollMemoryEnabled = false;
+let scrollFrame = 0;
+
+try { savedScrollY = restoreScroll ? Number(localStorage.getItem(scrollStorageKey)) || 0 : 0; } catch {}
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+function rememberScroll(){
+  if(!scrollMemoryEnabled || scrollFrame) return;
+  scrollFrame=requestAnimationFrame(()=>{
+    scrollFrame=0;
+    try { localStorage.setItem(scrollStorageKey,String(Math.round(scrollY))); } catch {}
+  });
+}
+
+function enableScrollMemory(){
+  if(scrollMemoryEnabled) return;
+  scrollMemoryEnabled=true;
+  addEventListener('scroll',rememberScroll,{passive:true});
+  const saveCurrentScroll=()=>{
+    try { localStorage.setItem(scrollStorageKey,String(Math.round(scrollY))); } catch {}
+  };
+  addEventListener('pagehide',saveCurrentScroll);
+  addEventListener('beforeunload',saveCurrentScroll);
+}
+
+function restoreSavedScroll(){
+  const fontsReady=document.fonts?.ready || Promise.resolve();
+  fontsReady.finally(()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const applySavedScroll=()=>{
+      if(!restoreScroll || savedScrollY<=0) return;
+      const maxScroll=Math.max(0,document.documentElement.scrollHeight-innerHeight);
+      scrollTo(0,Math.min(savedScrollY,maxScroll));
+    };
+    applySavedScroll();
+    setTimeout(applySavedScroll,120);
+    setTimeout(applySavedScroll,400);
+    enableScrollMemory();
+  })));
+}
 
 const esc = value => String(value ?? '').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const normalize = value => value.toLowerCase().replace(/[^a-zа-я0-9]/g,'');
@@ -94,4 +136,4 @@ sortOptions.forEach(option=>option.addEventListener('click',()=>{sortButton.data
 document.addEventListener('click',event=>{if(!event.target.closest('.custom-select'))closeSort()});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'){closeSort();sortButton.focus()}});
 
-Promise.all([fetch('./assets/data/jobs.json').then(r=>r.json()),fetch('./assets/data/recruiters.json').then(r=>r.json())]).then(([jobData,recruiterData])=>{companies=mergeData(jobData.jobs,recruiterData.companies);document.querySelector('#totalCount').textContent=jobData.jobs.length;document.querySelector('#companyCount').textContent=companies.length;document.querySelector('#contactCount').textContent=companies.reduce((sum,company)=>sum+people(company).length,0);render()}).catch(()=>{cards.innerHTML='<p class="load-error">Не удалось загрузить каталог. Обновите страницу.</p>'});
+Promise.all([fetch('./assets/data/jobs.json').then(r=>r.json()),fetch('./assets/data/recruiters.json').then(r=>r.json())]).then(([jobData,recruiterData])=>{companies=mergeData(jobData.jobs,recruiterData.companies);document.querySelector('#totalCount').textContent=jobData.jobs.length;document.querySelector('#companyCount').textContent=companies.length;document.querySelector('#contactCount').textContent=companies.reduce((sum,company)=>sum+people(company).length,0);render();restoreSavedScroll()}).catch(()=>{cards.innerHTML='<p class="load-error">Не удалось загрузить каталог. Обновите страницу.</p>';restoreSavedScroll()});
