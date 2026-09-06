@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="React-вакансии, технологические компании и публичные контакты рекрутеров Казахстана в едином каталоге." />
+  <meta name="theme-color" content="#f3f0e8" />
+  <title>React-работа в Казахстане — вакансии, компании и контакты</title>
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="На страницу вакансий"><span>R</span>react<span class="brand-dot">.</span>jobs</a>
+    <nav class="site-nav" aria-label="Основная навигация"><a class="active" href="#directory">Каталог</a><a href="#sources">Источники</a></nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="eyebrow"><span class="live-dot"></span> Кураторская подборка · обновлено 6 сентября 2026</div>
+      <h1>Сильные React-роли.<br><em>Без поискового шума.</em></h1>
+      <p class="lead">Вакансии, компании и публичные контакты — в одном каталоге. Сравнивайте роли, находите рекрутера и переходите к прямому отклику из одной карточки.</p>
+      <div class="hero-meta">
+        <div><strong id="totalCount">42</strong><span>открытые позиции</span></div>
+        <div><strong id="companyCount">0</strong><span>компаний в каталоге</span></div>
+        <div><strong id="contactCount">0</strong><span>публичных контактов</span></div>
+      </div>
+    </section>
+
+    <section class="listing" id="directory">
+      <div class="section-head">
+        <div>
+          <p class="kicker">ЕДИНЫЙ КАТАЛОГ</p>
+          <h2>Компании, роли и контакты</h2>
+        </div>
+        <div class="filters" role="group" aria-label="Быстрые фильтры">
+          <button class="filter active" data-filter="all">Все</button>
+          <button class="filter" data-filter="vacancy">Есть вакансия</button>
+          <button class="filter" data-filter="contact">Есть контакт</button>
+          <button class="filter" data-filter="remote">Удалённо</button>
+          <button class="filter" data-filter="astana">Астана</button>
+          <button class="filter" data-filter="almaty">Алматы</button>
+          <button class="filter" data-filter="frontend">Только frontend</button>
+          <button class="filter" data-filter="mobile">React Native</button>
+          <button class="filter" data-filter="adjacent">Full-stack</button>
+        </div>
+      </div>
+      <div class="catalog-tools"><label class="search-box"><span>Поиск</span><input id="searchInput" type="search" placeholder="Компания, роль или технология" autocomplete="off"></label><label class="sort-box"><span>Сортировка</span><select id="sortSelect"><option value="score">По рейтингу</option><option value="vacancies">Сначала с вакансиями</option><option value="contacts">Сначала с контактами</option><option value="name">По названию</option></select></label></div>
+      <div class="notice"><span>i</span><p>Карточка объединяет все найденные роли компании, публичные контакты и вывод по каждой вакансии. Компании без открытой позиции сохранены для прямого обращения.</p></div>
+      <div class="cards" id="cards"></div>
+      <div class="empty" id="empty">По этому фильтру ничего не найдено.</div>
+    </section>
+
+    <section class="sources" id="sources">
+      <p class="kicker">ДЕРЖАТЬ РЫНОК В ПОЛЕ ЗРЕНИЯ</p>
+      <h2>Источники новых ролей</h2>
+      <p>Сохраните эти поисковые ленты: новые публикации могут появиться между обновлениями подборки.</p>
+      <div class="source-grid">
+        <a href="https://astana.hh.kz/vacancies/react-developer/udalennaya_rabota" target="_blank" rel="noopener"><b>hh.kz</b><span>React · Астана · remote</span><i>↗</i></a>
+        <a href="https://astanahub.com/ru/vacancy" target="_blank" rel="noopener"><b>Astana Hub</b><span>Вакансии резидентов</span><i>↗</i></a>
+        <a href="https://www.linkedin.com/jobs/search/?keywords=React%20Developer&location=Kazakhstan" target="_blank" rel="noopener"><b>LinkedIn</b><span>React · Kazakhstan</span><i>↗</i></a>
+        <a href="https://workbench.kz/jobs/" target="_blank" rel="noopener"><b>WorkBench.kz</b><span>Локальные IT-вакансии</span><i>↗</i></a>
+        <a href="https://www.enbek.kz/ru/vac/profs/15" target="_blank" rel="noopener"><b>Enbek.kz</b><span>Официальная биржа труда</span><i>↗</i></a>
+        <a href="https://career.habr.com/vacancies?type=all&skills[]=1026" target="_blank" rel="noopener"><b>Хабр Карьера</b><span>Вакансии с React</span><i>↗</i></a>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Независимая подборка для React-разработчиков Казахстана</span><span>Актуальность проверена 06.09.2026 · Алматы</span></footer>
+  <script src="assets/js/jobs.js"></script>
+</body>
+</html>
