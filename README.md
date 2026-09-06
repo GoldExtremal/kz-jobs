@@ -4,7 +4,7 @@
 
 Проект собирает в одном месте вакансии, компании и публичные контакты рекрутеров, чтобы не искать информацию по десяткам карьерных сайтов, LinkedIn-профилей и Telegram-каналов.
 
-<img src="assets/images/preview.png" alt="Превью проекта" width="100%">
+<img src="assets/preview.png" alt="Превью проекта" width="100%">
 
 ### → [Открыть каталог](https://goldextremal.github.io/kz-jobs/)
 
